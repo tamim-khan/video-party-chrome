@@ -3,6 +3,8 @@ let tabToState = {};
 chrome.browserAction.onClicked.addListener((activeTab) => {
   if (!tabToState[activeTab.id] && tabToState[activeTab.id] !== false) {
     chrome.tabs.executeScript({file: "lib/socket-io-client.js"});
+    chrome.tabs.insertCSS({file: "lib/toastify.css"});
+    chrome.tabs.executeScript({file: "lib/toastify.js"});
     chrome.tabs.executeScript({file: "content.js"});
     tabToState[activeTab.id] = true;
   } else if (tabToState[activeTab.id] === false) {

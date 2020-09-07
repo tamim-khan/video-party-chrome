@@ -2,7 +2,20 @@ let executingMessage = false;
 let socket = null;
 let video = null;
 
+const showToast = (message) => {
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: 'right', // `left`, `center` or `right`
+    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+    stopOnFocus: true // Prevents dismissing of toast on hover
+  }).showToast();
+}
+
 const onPlay = () => {
+  showToast("Play");
   if (executingMessage) {
     executingMessage = false;
     return;
@@ -12,6 +25,7 @@ const onPlay = () => {
 };
 
 const onPause = () => {
+  showToast("Pause");
   if (executingMessage) {
     executingMessage = false;
     return;
@@ -41,6 +55,8 @@ const onVideoEvent = (videoEvent) => {
 const start = () => {
   console.log('[Video Party] Running!');
 
+  showToast("Video Party started!");
+
   const videos = document.getElementsByTagName('video');
 
   if (videos.length !== 0) {
@@ -60,6 +76,7 @@ const start = () => {
 
 const stop = () => {
   console.log('[Video Party] Stopping');
+  showToast("Video Party stopping");
   socket.close();
   socket = null;
   video.removeEventListener("play", onPlay);
